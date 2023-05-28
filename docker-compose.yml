@@ -1,0 +1,31 @@
+version: "3.8"
+
+volumes:
+  postgres-db:
+
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app/code/
+    env_file:
+      - 'src/.env'
+    environment:
+      - DATABASE_HOSTNAME=postgres-db
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres:13
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - 'src/.env'
+

@@ -10,8 +10,30 @@ packages = [{include = "fast_api_auth_service"}]
 python = "^3.11"
 fastapi = "^0.95.2"
 uvicorn = "^0.22.0"
+sqlmodel = "^0.0.8"
+alembic = "^1.9.3"
+psycopg2 = "^2.9.5"
+tenacity = "^8.2.1"
+pytest = "^7.2.1"
+httpx = "^0.23.3"
+sqlalchemy-utils = "^0.40.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+ipdb = "^0.13.11"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+exclude = "migrations/versions"
+
+[tool.isort]
+profile = "black"
+skip = ["migrations"]
