@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import Session, create_engine
 
-from src.config.config import get_settings
+from src.core.config import get_settings
 
 settings = get_settings()
 engine = create_engine(settings.SQLALCHEMY_DATABASE_URI, pool_pre_ping=True, echo=settings.ENVIRONMENT == "local")
