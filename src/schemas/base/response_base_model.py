@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from src.entities.base.base_entity import BaseEntity
+from src.schemas.base.base_entity import BaseEntity
 
 
 class SNResponseBaseModel(BaseEntity):
