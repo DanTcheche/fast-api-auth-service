@@ -16,8 +16,8 @@ class Settings(BaseSettings):
 
     JWT_PUBLIC_KEY: str
     JWT_PRIVATE_KEY: str
-    REFRESH_TOKEN_EXPIRES_IN: int
-    ACCESS_TOKEN_EXPIRES_IN: int
+    REFRESH_TOKEN_EXPIRES_MINUTES: int
+    ACCESS_TOKEN_EXPIRES_MINUTES: int
     JWT_ALGORITHM: str
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
