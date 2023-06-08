@@ -1,17 +1,20 @@
 from functools import lru_cache
 
-from pydantic import BaseSettings, PostgresDsn, validator
-from typing import Any, Dict, Optional
+from pydantic import BaseSettings, PostgresDsn, validator, AnyHttpUrl
+from typing import Any, Dict, Optional, Union, List
 
 
 class Settings(BaseSettings):
     APP_NAME = "Auth Service"
+    API_V1_STR: str = "/api/v1"
+    BACKEND_CORS_ORIGINS: Union[List[str], List[AnyHttpUrl]]
+    ENVIRONMENT: str
+
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
     POSTGRES_PORT: str
     DATABASE_HOSTNAME: str
-    ENVIRONMENT: str
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     JWT_PUBLIC_KEY: str
@@ -25,12 +28,21 @@ class Settings(BaseSettings):
         if isinstance(v, str):
             return v
         return PostgresDsn.build(
-            scheme="postgresql",
+            scheme="postgresql+psycopg2",
             user=values.get("POSTGRES_USER"),
             password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
+            host=values.get("DATABASE_HOSTNAME"),
+            port=str(values.get("POSTGRES_PORT")),
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
+
+    @validator("BACKEND_CORS_ORIGINS", pre=True)
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
 
     class Config:
         case_sensitive = True
