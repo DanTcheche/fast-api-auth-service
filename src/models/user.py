@@ -1,10 +1,12 @@
 from uuid import uuid4, UUID
 
-from sqlalchemy import Boolean, Column, String
-from sqlmodel import SQLModel, Field
+from sqlalchemy import Boolean, String
+from sqlmodel import Field
+
+from src.database.base_class import Base
 
 
-class User(SQLModel, table=True):
+class User(Base, table=True):
     __tablename__ = "users"
 
     id: UUID = Field(default_factory=uuid4, primary_key=True, nullable=False,)

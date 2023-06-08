@@ -8,6 +8,7 @@ services:
   api:
     build:
       context: .
+    command: [ "sh", "-c", "bash prestart_scripts/prestart.sh" ]
     ports:
       - "8000:8000"
     volumes:

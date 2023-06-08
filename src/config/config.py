@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     POSTGRES_PORT: str
     DATABASE_HOSTNAME: str
     ENVIRONMENT: str
-    SQLALCHEMY_DATABASE_URI: PostgresDsn
+    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     JWT_PUBLIC_KEY: str
     JWT_PRIVATE_KEY: str
@@ -33,6 +33,7 @@ class Settings(BaseSettings):
         )
 
     class Config:
+        case_sensitive = True
         env_file = "./.env"
         env_file_encoding = "utf-8"
 
