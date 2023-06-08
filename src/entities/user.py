@@ -1,4 +1,3 @@
-from typing import Optional
 from uuid import UUID
 
 from pydantic import Field
@@ -6,8 +5,10 @@ from pydantic import Field
 from src.entities.base.base_entity import BaseEntity
 
 
-class BranchCategory(BaseEntity):
+class User(BaseEntity):
 
-    id: Optional[UUID] = Field()
+    id: UUID = Field()
     email: str = Field()
-    password: Optional[dict] = Field()
+    password: str = Field()
+    active: bool = Field()
+
