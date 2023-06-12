@@ -46,7 +46,7 @@ class Settings(BaseSettings):
 
     class Config:
         case_sensitive = True
-        env_file = "./.env"
+        env_file = "src/.env"
         env_file_encoding = "utf-8"
 
 
