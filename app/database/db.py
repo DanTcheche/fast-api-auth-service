@@ -1,11 +1,10 @@
 from sqlmodel import create_engine, SQLModel, Session
 
-from app.core.config import settings
+from app.core.config import get_settings
 
-DATABASE_URL = (
-    f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_DB}@db:{settings.POSTGRES_PORT}/"
-    f"{settings.POSTGRES_DB}"
-)
+
+settings = get_settings()
+DATABASE_URL = settings.DATABASE_URI
 engine = create_engine(DATABASE_URL, echo=True)
 
 
