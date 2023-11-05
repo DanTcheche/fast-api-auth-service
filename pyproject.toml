@@ -7,13 +7,13 @@ readme = "README.md"
 packages = [{include = "fast_api_auth_service"}]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 fastapi = "^0.103.2"
-alembic = "^1.12.0"
-sqlmodel = "^0.0.8"
-black = "^23.9.1"
+alembic = "^1.12.1"
+sqlmodel = "0.0.11"
+black = "^23.10.1"
 flake8 = "^6.1.0"
-pre-commit = "^3.4.0"
+pre-commit = "^3.5.0"
 
 
 [build-system]
