@@ -10,5 +10,18 @@ services:
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
 
+  api:
+    build:
+      context: .
+    depends_on:
+      - db
+    container_name: app-api
+    env_file:
+      - .env
+    ports:
+      - ${API_PORT:-8000}:8000
+    volumes:
+      - ./:/app/
+
 volumes:
   app-db-data:
