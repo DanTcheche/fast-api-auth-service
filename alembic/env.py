@@ -1,10 +1,12 @@
 from __future__ import with_statement
 
-import os
-
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
+from sqlmodel import SQLModel
+
+from app.core.config import get_settings
+from app.models import *  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -21,9 +23,10 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-from app.db.base import Base  # noqa
 
-target_metadata = Base.metadata
+target_metadata = SQLModel.metadata
+
+settings = get_settings()
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -32,11 +35,7 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    user = os.getenv("POSTGRES_USER", "postgres")
-    password = os.getenv("POSTGRES_PASSWORD", "")
-    server = os.getenv("POSTGRES_SERVER", "db")
-    db = os.getenv("POSTGRES_DB", "app")
-    return f"postgresql://{user}:{password}@{server}/{db}"
+    return settings.SQLALCHEMY_DATABASE_URI
 
 
 def run_migrations_offline():
