@@ -19,6 +19,7 @@ pydantic-settings = "^2.1.0"
 autoflake = "^2.2.1"
 mypy = "^1.8.0"
 sqlmodel = "^0.0.14"
+tenacity = "^8.2.3"
 
 
 [build-system]
