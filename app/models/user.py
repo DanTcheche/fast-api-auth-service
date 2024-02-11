@@ -1,9 +1,10 @@
 import uuid
-from typing import Optional
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field
+
+from app.db.base_class import Base
 
 
-class User(SQLModel, table=True):
-    id: Optional[int] = Field(default=uuid.uuid4, primary_key=True)
+class User(Base, table=True):
+    id: uuid.UUID = Field(default=uuid.uuid4, primary_key=True)
     email: str = Field(unique=True)
