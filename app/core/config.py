@@ -1,8 +1,9 @@
 import secrets
-from typing import Any, Dict, List, Optional, Union
+from functools import lru_cache
+from typing import List, Optional, Union
 
 from pydantic import AnyHttpUrl, PostgresDsn, field_validator
-from pydantic.v1 import validator
+from pydantic_core.core_schema import ValidationInfo
 from pydantic_settings import BaseSettings
 
 
@@ -28,19 +29,20 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    SQLALCHEMY_DATABASE_URI: Optional[str] = None
 
-    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
-        if isinstance(v, str):
-            return v
+    @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
+    @classmethod
+    def assemble_db_uri(cls, field_value, info: ValidationInfo) -> str:
+        if isinstance(field_value, str):
+            return field_value
         return PostgresDsn.build(
-            scheme="postgresql",
-            user=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
-        )
+            scheme="postgresql+psycopg2",
+            username=info.data.get("POSTGRES_USER"),
+            password=info.data.get("POSTGRES_PASSWORD"),
+            host=info.data.get("POSTGRES_SERVER"),
+            path=info.data.get("POSTGRES_DB") or "",
+        ).unicode_string()
 
     class Config:
         case_sensitive = True
@@ -49,3 +51,8 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+@lru_cache()
+def get_settings():
+    return settings
