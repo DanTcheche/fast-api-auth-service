@@ -8,8 +8,11 @@ from app.repositories.users_repository import user_repository
 
 
 class UserService:
-    def authenticate(self, db: Session, *, email: str, password: str) -> Optional[User]:
-        user = user_repository.get_by_email(db, email=email)
+    def __init__(self, session: Session):
+        self.session = session
+
+    def authenticate(self, email: str, password: str) -> Optional[User]:
+        user = user_repository.get_by_email(self.session, email=email)
         if not user:
             return None
         if not verify_password(password, user.hashed_password):
