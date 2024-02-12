@@ -8,3 +8,11 @@ repos:
       rev: 6.1.0
       hooks:
       - id: flake8
+  - repo: local
+    hooks:
+      - id: format-script
+        name: format-script
+        entry: app/scripts/format.sh
+        language: script
+        types: [ python ]
+        pass_filenames: false
