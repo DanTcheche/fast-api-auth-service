@@ -1,10 +1,3 @@
-"""Create user model
-
-Revision ID: 67a98a7dbfd9
-Revises:
-Create Date: 2024-02-11 20:03:18.999179
-
-"""
 from typing import Sequence, Union
 
 from alembic import op
@@ -13,7 +6,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = "67a98a7dbfd9"
+revision: str = "0362c46f9601"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -27,6 +20,9 @@ def upgrade() -> None:
         sa.Column("updated_at", sa.DateTime(), nullable=False),
         sa.Column("id", sqlmodel.sql.sqltypes.GUID(), nullable=False),
         sa.Column("email", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+        sa.Column(
+            "hashed_password", sqlmodel.sql.sqltypes.AutoString(), nullable=False
+        ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("email"),
     )

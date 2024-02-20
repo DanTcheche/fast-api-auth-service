@@ -13,10 +13,10 @@ ALGORITHM = "HS256"
 
 
 def create_access_token(
-    subject: Union[str, Any], expires_delta: timedelta = None
+    subject: Union[str, Any], expires_delta_minutes: int = 0
 ) -> str:
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+    if expires_delta_minutes:
+        expire = datetime.utcnow() + timedelta(minutes=expires_delta_minutes)
     else:
         expire = datetime.utcnow() + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
