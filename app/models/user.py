@@ -1,11 +1,10 @@
-import uuid
-
-from sqlmodel import Field
+from sqlalchemy import Column, String
+from sqlalchemy.orm import Mapped
 
 from app.models.base_class import Base
 
 
-class User(Base, table=True):
+class User(Base):
     __tablename__ = "users"
-    id: uuid.UUID = Field(default=uuid.uuid4, primary_key=True)
-    email: str = Field(unique=True)
+
+    email: Mapped[str] = Column(String, unique=True, nullable=False)
