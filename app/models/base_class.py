@@ -14,10 +14,10 @@ class Base:
     id: Mapped[uuid.UUID] = Column(
         UUID(as_uuid=True), default=uuid.uuid4, primary_key=True, nullable=False
     )
-    time_created: Mapped[datetime] = Column(
+    created_at: Mapped[datetime] = Column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
-    time_updated: Mapped[datetime] = Column(
+    updated_at: Mapped[datetime] = Column(
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now(),
