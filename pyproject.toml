@@ -22,6 +22,7 @@ sqlmodel = "^0.0.14"
 tenacity = "^8.2.3"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pytz = "^2024.1"
 
 
 [build-system]
