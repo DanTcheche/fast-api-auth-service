@@ -1,12 +1,11 @@
-FROM python:3.11.1-slim
+FROM python:3.12.2-slim
 
 ARG ENV
 
-ENV TZ=America/Argentina/Buenos_Aires \
-    LANG=en_US.UTF-8 \
+ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
-    BASE_DIR=/app \
-    POETRY_VERSION=1.3.2
+    BASE_DIR=/code \
+    POETRY_VERSION=1.7.1
 
 RUN pip install psycopg2-binary
 
@@ -25,5 +24,6 @@ RUN poetry config virtualenvs.create false \
 COPY . $BASE_DIR
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x $BASE_DIR/tests-start.sh
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
