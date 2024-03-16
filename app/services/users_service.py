@@ -3,12 +3,12 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 from app.core.security import verify_password
-from app.repositories.users_repository import UserRepository
+from app.repositories.users_repository import UsersRepository
 from app.schemas.user_schema import UserInDBBase
 
 
-class UserService:
-    def __init__(self, session: Session, repository: UserRepository):
+class UsersService:
+    def __init__(self, session: Session, repository: UsersRepository):
         self.session = session
         self.repository = repository
 

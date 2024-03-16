@@ -8,7 +8,7 @@ from app.core.config import get_settings
 from app.core.security import create_access_token
 from app.repositories import users_repository
 from app.schemas.token_schema import Token
-from app.services.users_service import UserService
+from app.services.users_service import UsersService
 
 router = APIRouter()
 settings = get_settings()
@@ -19,7 +19,7 @@ def login_access_token(
     session: SessionDependency,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ) -> Token:
-    user = UserService(session, users_repository).authenticate(
+    user = UsersService(session, users_repository).authenticate(
         email=form_data.username, password=form_data.password
     )
     if not user:
