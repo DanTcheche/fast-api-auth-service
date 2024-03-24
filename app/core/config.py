@@ -8,20 +8,25 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    # APP
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     SERVER_NAME: str
     SERVER_HOST: AnyHttpUrl
     BACKEND_CORS_ORIGINS: Union[str, List[str]] = []
-
     PROJECT_NAME: str
 
+    # Database
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
+    POSTGRES_PORT: int
     SQLALCHEMY_DATABASE_URI: Optional[str] = None
+
+    # Auth
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     @field_validator("BACKEND_CORS_ORIGINS", mode="before")
     @classmethod

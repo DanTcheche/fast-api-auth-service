@@ -21,7 +21,7 @@ class UserInDBBase(UserBase):
     id: Optional[UUID] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserResponse(UserInDBBase):
