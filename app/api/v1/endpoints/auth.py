@@ -24,6 +24,4 @@ def login_access_token(
     )
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
-    return Token(
-        access_token=create_access_token(user.id, settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    )
+    return Token(access_token=create_access_token(user.id))
