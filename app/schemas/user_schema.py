@@ -10,11 +10,11 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     email: EmailStr
-    password: str
+    hashed_password: str
 
 
 class UserUpdate(UserBase):
-    password: Optional[str] = None
+    hashed_password: Optional[str] = None
 
 
 class UserInDBBase(UserBase):

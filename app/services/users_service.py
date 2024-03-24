@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.security import verify_password
 from app.repositories.users_repository import UsersRepository
-from app.schemas.user_schema import UserInDBBase
+from app.schemas.user_schema import UserCreate, UserInDBBase
 
 
 class UsersService:
@@ -24,4 +24,8 @@ class UsersService:
         user = self.repository.get(self.session, user_id)
         if not user:
             return None
+        return UserInDBBase.model_validate(user)
+
+    def create_user(self, user: UserCreate) -> UserInDBBase:
+        user = self.repository.create(self.session, user)
         return UserInDBBase.model_validate(user)
