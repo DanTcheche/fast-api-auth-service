@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.api.dependencies.get_db import SessionDependency
 from app.core.config import get_settings
 from app.core.security import create_access_token
-from app.repositories import users_repository
+from app.repositories.users_repository import users_repository
 from app.schemas.token_schema import Token
 from app.services.users_service import UsersService
 
